@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Not Trump's Wall</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+    .formish {
+        width: 44%;
+        padding-left: 3%;
+        margin-top: 0%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .formish h4 {
+        text-decoration: underline;
+    }
+    .register {
+        display: inline-block;
+        vertical-align: top;
+    }
+    .jumbotron {
+        padding: 2rem 2rem;
+    }
+    .inlinevert {
+        display: inline-block;
+        vertical-align: top;
+        word-wrap: break-word;
+    }
+    .breathingroom {
+        margin: 4%;
+    }
+    #widen {
+        width: 50%;
+        border-left: 2px solid black;
+    }
+    .flashes {
+        color: green;
+    }
+</style>
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand">Not Trump's Wall</a>
+        <div class="form-inline">
+            <a class="navbar-brand mr-sm-2">Welcome {{session['user'][0]['first_name']}}!</a>
+            <a href='/logout' class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</a>
+        </div>
+    </nav>
+    <div class="jumbotron-fluid">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+        <div class="register formish">
+            <h4>NUM Messages for you</h4>
+            {% for message in messages %}
+            {% if session['user'][0]['id'] == message['reciever_id'] %}
+            <div class="breathingroom">
+                <h6>{{message['first_name']}} said:</h6>
+                <p class="inlinevert">{{message['text']}}</p>
+                <a class="inlinevert" href="/delete/{{message['id']}}"><img src="{{ url_for('static' , filename='img/trashcan.png')}}" alt="trashcan" height="25px" width="25px"></a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div id="widen" class="formish">
+                <h4>Send a Message!</h4>
+                {% for user in users %}
+                {% if session['user'][0]['id'] != user['id'] %}
+                <form action='/send' method="POST" class="breathingroom">
+                    <p class="inlinevert">{{user['first_name']}}</p>
+                    <textarea class="inlinevert" name="message" id="" cols="40" rows="5"></textarea>
+                    <input class="inlinevert" type="hidden" name="hidden" value="{{user['id']}}">
+                    <input class="inlinevert" type="submit" name="submit" value=" Send ">
+                </form>
+                {% endif %}
+                {% endfor %}
+            </div>
+    </div>
+</body>
+</html>

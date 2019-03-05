@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+    .formish {
+        width: 30%;
+        padding-top: 1%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .register {
+        margin-right: 20%;
+        display: inline-block;
+        vertical-align: top;
+    }
+    .enter {
+        width: 100%;
+        margin-bottom: 2%;
+        border-radius: 5px;
+    }
+    h6 {
+        margin-bottom: 0px;
+    }
+    .flashes {
+        color: red;
+    }
+</style>
+<body>
+    <div class="jumbotron">
+        <h1>Login and Registration</h1>
+        <div class="register formish">
+            <form action='/register' method="POST">
+                <h2>Register Here!</h2>
+                <h6>First Name:</h6>
+                <input class="enter" type="text" name="fname" placeholder="Enter First Name">
+                <h6>Last Name:</h6>
+                <input class="enter" type="text" name="lname" placeholder="Enter Last Name">
+                <h6>Email:</h6>
+                <input class="enter" type="text" name="email" placeholder="Enter Email">
+                <h6>Password:</h6>
+                <input class="enter" type="password" name="pass" placeholder="Enter Password">
+                <h6>Confirm Password:</h6>
+                <input class="enter" type="password" name="cpass" placeholder="Enter Password">
+                <input class="btn btn-primary" type="submit" name="register" value=" Register ">
+            </form>
+        </div>
+        <div class="login formish">
+            <form action='/login' method='POST'>
+                <h2>Login Here!</h2>
+                <h6>Email:</h6>
+                <input class="enter" type="text" name="email" placeholder="Enter Email">
+                <h6>Password:</h6>
+                <input class="enter" type="password" name="pass" placeholder="Enter Password">
+                <input class="btn btn-primary" type="submit" name="login" value=" Login ">
+            </form>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>
